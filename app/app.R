@@ -7,7 +7,7 @@ library(DT)
 library(shinythemes)
 
 # Load data
-college <- read.csv("../../../../data/college_pell2.csv")
+college <- read.csv("../../../../../data/college_pell2.csv")
 
 # User Interface
 ui <- fluidPage(
