@@ -113,3 +113,6 @@ shiny_write_docker(path = ".", appdir = "app")
 Within thermal at location of docker file, run command:
 *make sure docker desktop is running*
 docker build . -t shiny_college_app
+
+*push*
+docker push shiny_college_app

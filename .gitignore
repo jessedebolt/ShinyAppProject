@@ -50,3 +50,6 @@ rsconnect/
 
 # Archived files for personal reference
 Archive/
+
+#RMD notes for creating docker
+Docker_Steps.Rmd
