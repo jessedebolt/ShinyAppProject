@@ -14,7 +14,10 @@ ui <- fluidPage(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")
   ),
-#  themeSelector(),
+  
+  tags$footer( HTML("<footer><b> Made with 'Shiny' by Jesse DeBolt ©2023.</b></footer>"), align="left", style="position:absolute; bottom:0; width:95%; height:50px; color: #000000; padding: 0px; background-color: transparent; z-index: 1000;"),
+
+  #  themeSelector(),
 
     # Application title
     titlePanel("US College Selection"),
