@@ -5,12 +5,6 @@ date: "2023-04-17"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-```
-
-
 # Create renv
 ```{r}
 #install.packages("renv")
@@ -27,7 +21,6 @@ renv::init()
 ## System requirements function
 ## Ref: https://www.youtube.com/watch?v=ahUkSsxObp4
 ## https://www.jumpingrivers.com/blog/shiny-auto-docker/
-**Not specifically needed?**
 ```{r}
 # https://www.jumpingrivers.com/blog/shiny-auto-docker/#:~:text=glue_sys_reqs%20%3D%20function,%3D%20FALSE%0A%20%20)%0A%7D
 
@@ -67,7 +60,7 @@ glue_sys_reqs = function(pkgs) {
 # Creating Docker file generation function
 ```{r}
 shiny_write_docker = function(
-  path = ".", appdir = ".", lockfile = "shiny_renv.lock",
+  path = ".", appdir = "app", lockfile = "shiny_renv.lock",
   port = 3838, expose = TRUE, rspm = TRUE
 ) {
   rspm_env = ifelse(
@@ -111,7 +104,7 @@ shiny_write_docker = function(
 
 # Creating Docker file from function
 ```{r}
-shiny_write_docker(path = ".", appdir = ".")
+shiny_write_docker(path = ".", appdir = "app")
 #> * Lockfile written to 'shiny_renv.lock'.
 #> Finding R package dependencies ... Done!
 
