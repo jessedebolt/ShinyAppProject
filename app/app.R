@@ -15,7 +15,7 @@ ui <- fluidPage(
     tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")
   ),
   
-  tags$footer( HTML("<footer><b> Made with 'Shiny' by Jesse DeBolt ©2023.</b></footer>"), align="left", style="position:absolute; bottom:0; width:95%; height:50px; color: #000000; padding: 0px; background-color: transparent; z-index: 1000;"),
+  tags$footer( HTML("<footer><b> Made with 'Shiny' by Jesse DeBolt ©2023</b></footer>"), align="left", style="position:absolute; bottom:0; width:95%; height:50px; color: #000000; padding: 0px; background-color: transparent; z-index: 1000;"),
 
   #  themeSelector(),
 
@@ -70,17 +70,20 @@ ui <- fluidPage(
 # Define server logic
 server <- function(input, output) {
 
+  # Create filtered data based on selections
+  data_filtered <- reactive({
+    college %>%
+    filter(state == input$state,
+           ownership == input$ownership,
+           gender == input$gender,
+           graduate_program == input$graduate
+    )
+  })
+  
     output$map <- renderLeaflet({
 
-      data_filtered <- college %>%
-        filter(state == input$state,
-               ownership == input$ownership,
-               gender == input$gender,
-               graduate_program == input$graduate
-        )
-
-      
-        leaflet(data_filtered) %>%
+        # Generate leaflet map
+        leaflet(data_filtered()) %>%
         addTiles() %>%
         addMarkers(~longitude, ~latitude, popup = ~school_name)
           # addMarkers(~longitude, ~latitude, 
@@ -91,15 +94,7 @@ server <- function(input, output) {
     
     # Create a DT::datatable
     output$datatable <- DT::renderDataTable({
-      
-      data_filtered <- college %>%
-        filter(state == input$state,
-               ownership == input$ownership,
-               gender == input$gender,
-               graduate_program == input$graduate
-        )
-      
-      datatable(data = data_filtered, caption = 'US colleges with noted criteria',
+      datatable(data = data_filtered(), caption = 'US colleges with noted criteria',
                 extensions = c("Scroller", "Buttons"), 
                 options = list(autoFill = TRUE, pageLength = 5, 
                                fixedColumns.left = 2, # !!! NOT working
@@ -111,7 +106,6 @@ server <- function(input, output) {
                                                       targets = 0:47),
                                                  list(className = 'dt-body-left',
                                                       targets = 1:47))),
-                               
                 class = 'cell-boarder stripe hover'
                 
                 ) %>%
